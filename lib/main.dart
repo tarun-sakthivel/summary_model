@@ -19,13 +19,15 @@ class MyHttpOverrides extends HttpOverrides {
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: pdfpicker(),
     );
   }
@@ -46,7 +48,7 @@ class _pdfpickerState extends State<pdfpicker> {
   File? fileToDisplay;
   List pickedfiles = [];
   String pathofFile = '';
-  String _output = '';
+  final String _output = '';
   String base64String = '';
   String manual_text =
       'Projectile motion refers to the motion of an object that is projected into the air and then allowed to move under the influence of gravity. It is a classic example of two-dimensional motion. During projectile motion, the object follows a curved path known as a trajectory. The trajectory consists of two components: horizontal motion and vertical motion. The horizontal motion remains constant, while the vertical motion is influenced by gravity. The object reaches its maximum height at the peak of its trajectory before descending back to the ground. The time of flight, maximum height, and range of the projectile can be calculated using specific equations derived from the principles of kinematics. Projectile motion is utilized in various real-world scenarios, such as sports, engineering, and physics experiments. Understanding projectile motion is essential for predicting the behavior of objects in flight and designing effective systems and structures';
@@ -106,7 +108,11 @@ class _pdfpickerState extends State<pdfpicker> {
       String botResponse = jsonResponse['data'];
       // Print or return the bot response
       print("Bot response: $botResponse");
-      return botResponse;
+      return Text(
+        "Final summary: $botResponse",
+        style: const TextStyle(
+            fontSize: 28, color: Colors.black, fontWeight: FontWeight.w400),
+      );
     } else {
       // Request failed, handle error.
       print('Request failed with status: ${response.statusCode}');
@@ -159,12 +165,16 @@ class _pdfpickerState extends State<pdfpicker> {
                 : Container(),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(40, 60),
-                  backgroundColor: Color.fromARGB(255, 61, 255, 7)),
+                  minimumSize: const Size(60, 50),
+                  maximumSize: const Size(210, 55),
+                  backgroundColor: const Color.fromARGB(255, 0, 106, 255)),
               onPressed: () {
-                fetchData();
+                pickFile();
               },
-              child: const Text("Pick the file")),
+              child: const Text(
+                "upload file",
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              )),
         ],
       ),
     );
